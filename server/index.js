@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path');
 const app = express()
 const cors = require('cors')
 app.use(cors()) 
@@ -29,9 +30,19 @@ app.use(express.json());
       "number": "39-23-6423122"
     }
 ]
+const buildpath = path.join(__dirname, '../client/build')
+
+// api routes
 app.get('/api/persons', (request, response) => {
     response.json(persons)
   })
+// after npm run build from the frontend side
+app.use(express.static(buildpath))
+
+// Catch-all handler for any requests that don't match your API routes
+app.get('*', (request, response) => {
+  response.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
   app.get('/api/persons/:id', (request, response) => {
     const id = request.params.id
