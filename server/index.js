@@ -1,5 +1,7 @@
 const express = require('express')
 const path = require('path');
+const dotenv = require('dotenv')
+dotenv.config()
 const app = express()
 const cors = require('cors')
 app.use(cors()) 
@@ -33,7 +35,7 @@ app.use(express.json());
 const buildpath = path.join(__dirname, '../client/build')
 
 // api routes
-app.get('/api/persons', (request, response) => {
+app.get('/persons', (request, response) => {
     response.json(persons)
   })
 // after npm run build from the frontend side
@@ -44,7 +46,7 @@ app.get('*', (request, response) => {
   response.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
-  app.get('/api/persons/:id', (request, response) => {
+  app.get('/persons/:id', (request, response) => {
     const id = request.params.id
     const person = persons.find(person => person.id === id)
     if (person){
@@ -56,14 +58,14 @@ app.get('*', (request, response) => {
     }
     
   })
-  app.delete('/api/persons/:id', (request, response) => {
+  app.delete('/persons/:id', (request, response) => {
     const id = request.params.id
     persons = persons.filter(person => person.id !== id)
   
     response.status(204).end()
   })
 
-  app.post('/api/persons', (request, response)=>{
+  app.post('/persons', (request, response)=>{
     // const id = Math.floor(Math.random() * 100)
     const id = persons.length + 1;
     const b = request.body;
@@ -89,7 +91,7 @@ app.get('*', (request, response) => {
     response.json(newPerson);
   })
 
-  app.put('/api/persons/:id', (request, response)=>{
+  app.put('/persons/:id', (request, response)=>{
     const id = request.params.id
     const index = persons.findIndex(person => person.id === id);
 

@@ -42,7 +42,7 @@ function App() {
   useEffect(()=>{
     console.log("effect")
 
-    axios.get('http://localhost:3001/api/persons').then(response=>{
+    axios.get('https://part3-full-stack-phone.onrender.com/persons').then(response=>{
       console.log('promise fulfilled')
       setAllpersons(response.data)
       setPersons(response.data)
@@ -67,7 +67,7 @@ function App() {
         const id = parseInt(person.id)
         console.log(id);
           axios
-              .put(`http://localhost:3001/api/persons/${id}`, personObject)
+              .put(`https://part3-full-stack-phone.onrender.com/persons/${id}`, personObject)
               .then(response=>{
                 console.log('updated person', response.data);
                 setPersons(persons.map(person => person.id !== id ? person : response.data))
@@ -87,7 +87,7 @@ function App() {
       }
     }else{
       axios
-          .post('http://localhost:3001/api/persons',personObject)
+          .post('https://part3-full-stack-phone.onrender.com/persons',personObject)
           .then(response =>{
             setPersons(persons.concat(response.data))
             setsuccessMessage(
@@ -110,7 +110,7 @@ function App() {
     if (window.confirm(`Delete ${person.name}`)){
       const id = parseInt(person.id)
       console.log(id);
-      axios.delete('http://localhost:3001/api/persons/' + id).then((response)=>{
+      axios.delete('https://part3-full-stack-phone.onrender.com/persons/' + id).then((response)=>{
         console.log(response);
       })
       
